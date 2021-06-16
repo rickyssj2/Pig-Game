@@ -17,6 +17,7 @@ body {
   height: 100vh;
   color: #333;
   background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,8 +26,8 @@ body {
 /* LAYOUT */
 main {
   position: relative;
-  width: 100rem;
-  height: 60rem;
+  width: 60vw;
+  height: 60vh;
   background-color: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(200px);
   filter: blur();
@@ -133,10 +134,10 @@ main {
   top: 4rem;
 }
 .btn--roll {
-  top: 39.3rem;
+  top: 60%;
 }
 .btn--hold {
-  top: 46.1rem;
+  top: 80%;
 }
 
 .btn:active {
