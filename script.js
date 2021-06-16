@@ -10,13 +10,15 @@ const btnRollElement = document.querySelector('.btn--roll');
 const btnHoldElement = document.querySelector('.btn--hold');
 const diceElement = document.querySelector('.dice');
 
-//initializing everything
-score0Element.textContent = 0;
-score1Element.textContent = 0;
+//initializing global variables and setting everything to zero
 let currentScore = 0;
 let activePlayer = 0;
 let scores = [0, 0];
+score0Element.textContent = 0;
+score1Element.textContent = 0;
 
+
+////////////////////////////////////////// FUNCTIONS /////////////////////////////////////////
 //function to change activePlayer
 const changeActivePlayer = () => {
     document.querySelector(`.player--${activePlayer}`).classList.toggle('player--active');
@@ -44,48 +46,81 @@ const btnRollClick = function () {
     }
 };
 
-//adding event listener to btnRollElement
-btnRollElement.addEventListener('click', btnRollClick);
+//btnHodlFunction 
+const btnHoldFunction = function () {
 
-btnHoldElement.addEventListener('click', function () {
+    //add current score to scores on Hold
     scores[activePlayer] += currentScore;
+
+    //check if the player has won
     if (scores[activePlayer] >= 100) {
         document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
+
+        //add the winner class
         document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+
+        //remove event listeners after winning
         btnRollElement.removeEventListener('click', btnRollClick);
+        btnHoldElement.removeEventListener('click', btnHoldFunction);
+
     } else {
+        //display the score of active player
         document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
+
+        //set current score to zero
         currentScore = 0;
         document.getElementById(`current--${activePlayer}`).textContent = 0;
+
+        //and change the active player
         changeActivePlayer();
     }
 
-});
+}
 
-btnNewElement.addEventListener('click', function () {
+//btnNewFunction
+const btnNewFunction = function () {
+    //reset everything to 0 at the start of the game
     score0Element.textContent = 0;
     score1Element.textContent = 0;
     currentScore = 0;
     scores = [0, 0];
-    document.getElementById(`current--${activePlayer}`).textContent = currentScore;
-    document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    document.getElementById(`score--${activePlayer}`).textContent = 0;
+
+    //remove/ reset all classes from Players
+    document.querySelector(`.player--${activePlayer}`).classList.remove('player--winner');
     diceElement.classList.add('hidden');
     document.querySelector(`.player--0`).classList.add('player--active');
     document.querySelector(`.player--1`).classList.remove('player--active');
-})
 
-//extra functionality
+    //again add event listeners to roll and hold buttons
+    btnRollElement.addEventListener('click', btnRollClick);
+    btnHoldElement.addEventListener('click', btnHoldFunction);
+
+    //set active player to 0 at start of the game
+    activePlayer = 0;
+}
+//////////////////////////////////////////////FUNCTIONS END ///////////////////////////////////////////
+
+
+//adding event listener to btnRollElement, btnHoldElement, and btnNewFuntion
+btnRollElement.addEventListener('click', btnRollClick);
+btnHoldElement.addEventListener('click', btnHoldFunction);
+btnNewElement.addEventListener('click', btnNewFunction)
+
+//extra functionality for Rules to show/hide
 const rulesBtn = document.querySelector('.rules__btn');
 const expandArrow = document.querySelector('.expand');
 const rulesList = document.querySelector('.rules__list');
 
+//adding event listener to Rules title 
 rulesBtn.addEventListener('click', function () {
     expandArrow.classList.toggle('collapse');
     rulesList.classList.toggle('hidden');
 
 })
 
-//check for mobile users
+//check for mobile users and display error
 var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 var element = document.querySelector('body');
 if (isMobile) {
