@@ -84,3 +84,13 @@ rulesBtn.addEventListener('click', function () {
     rulesList.classList.toggle('hidden');
 
 })
+
+//check for mobile users
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var element = document.querySelector('body');
+if (isMobile) {
+    element.innerHTML = "This website is not optimized for mobile. Please use a Desktop";
+    element.style.color = '#ddd';
+    element.style.fontSize = '2rem';
+    element.style.textAlign = 'center';
+}
