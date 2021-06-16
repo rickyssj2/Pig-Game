@@ -65,7 +65,6 @@ btnNewElement.addEventListener('click', function () {
     score0Element.textContent = 0;
     score1Element.textContent = 0;
     currentScore = 0;
-    activePlayer = 0;
     scores = [0, 0];
     document.getElementById(`current--${activePlayer}`).textContent = currentScore;
     document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
